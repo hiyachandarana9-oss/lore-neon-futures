@@ -118,10 +118,6 @@ function SwipeCard({
   const rotate = useTransform(x, [-220, 220], [-12, 12]);
   const likeOpacity = useTransform(x, [20, 140], [0, 1]);
   const skipOpacity = useTransform(x, [-140, -20], [1, 0]);
-  const glowPink = useTransform(x, [0, 200], [0, 1]);
-  const glowCyan = useTransform(x, [-200, 0], [1, 0]);
-  const imgX = useTransform(x, [-200, 200], [16, -16]);
-
   function onDragEnd(_: unknown, info: PanInfo) {
     const off = info.offset.x;
     const v = info.velocity.x;
@@ -135,14 +131,15 @@ function SwipeCard({
 
   return (
     <motion.div
-      className="absolute inset-0"
+      className="absolute inset-0 will-change-transform transform-gpu"
       style={{
         x: isTop ? x : 0,
         rotate: isTop ? rotate : 0,
       }}
       drag={isTop ? "x" : false}
       dragConstraints={{ left: 0, right: 0 }}
-      dragElastic={0.7}
+      dragElastic={0.6}
+      dragMomentum={false}
       onDragEnd={onDragEnd}
       initial={{ opacity: 0, y: 30, scale: 0.96 }}
       animate={{
@@ -155,45 +152,26 @@ function SwipeCard({
         x: x.get() > 0 ? 480 : -480,
         rotate: x.get() > 0 ? 24 : -24,
         opacity: 0,
-        transition: { duration: 0.32, ease: [0.4, 0, 0.2, 1] },
+        transition: { duration: 0.28, ease: [0.4, 0, 0.2, 1] },
       }}
       whileTap={{ cursor: "grabbing" }}
     >
-      {/* Reactive glow auras */}
-      {isTop && (
-        <>
-          <motion.div
-            aria-hidden
-            className="pointer-events-none absolute -inset-6 rounded-[2rem] bg-pink-500/40 blur-3xl"
-            style={{ opacity: glowPink }}
-          />
-          <motion.div
-            aria-hidden
-            className="pointer-events-none absolute -inset-6 rounded-[2rem] bg-cyan-400/40 blur-3xl"
-            style={{ opacity: glowCyan }}
-          />
-        </>
-      )}
-
       <div
         className={
-          "glass-strong shadow-glass relative flex h-full flex-col overflow-hidden rounded-3xl " +
-          (isTop ? "neon-border glow-pink" : "")
+          "shadow-glass relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-[var(--surface-2)] " +
+          (isTop ? "glow-pink" : "")
         }
         style={{ zIndex: 10 - depth }}
       >
         <div className="relative h-[58%] w-full overflow-hidden">
-          <motion.img
+          <img
             src={card.image}
             alt=""
-            className="h-[110%] w-[110%] -translate-x-[5%] -translate-y-[5%] object-cover"
-            style={isTop ? { x: imgX } : undefined}
+            className="h-full w-full object-cover"
             draggable={false}
           />
           {/* Cinematic overlays */}
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/55 to-transparent" />
-          <div className="absolute inset-0 bg-[radial-gradient(120%_60%_at_50%_0%,transparent_30%,oklch(0.13_0.025_280/0.55)_100%)]" />
-          <div className="grid-lines absolute inset-0 opacity-30 mix-blend-soft-light" />
 
           {/* Top meta row */}
           <div className="absolute left-4 right-4 top-4 flex items-center justify-between">

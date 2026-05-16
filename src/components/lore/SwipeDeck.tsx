@@ -158,7 +158,7 @@ function SwipeCard({
     >
       <div
         className={
-          "glass-strong shadow-glass relative flex h-full flex-col overflow-hidden rounded-3xl " +
+          "shadow-glass relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-[var(--surface-2)] " +
           (isTop ? "glow-pink" : "")
         }
         style={{ zIndex: 10 - depth }}

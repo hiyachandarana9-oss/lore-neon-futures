@@ -9,7 +9,7 @@ export const Route = createFileRoute("/news/$id")({
   notFoundComponent: () => (
     <div className="p-10 text-center text-muted-foreground">Story not found.</div>
   ),
-  loader: ({ params }) => {
+  loader: ({ params }): { news: (typeof NEWS)[number] } => {
     const news = NEWS.find((n) => n.id === params.id);
     if (!news) throw notFound();
     return { news };

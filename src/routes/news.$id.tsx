@@ -55,7 +55,7 @@ function NewsLorePage() {
       <section className="px-4 pt-5">
         <SectionLabel emoji="❓" title="Why should I care?" />
         <div className="glass-strong space-y-3 rounded-2xl p-4">
-          {news.whyCare.map((w, i) => (
+          {news.whyCare.map((w: string, i: number) => (
             <div key={i} className="flex items-start gap-3">
               <div className="gradient-neon mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-primary-foreground">
                 {i + 1}
@@ -70,7 +70,7 @@ function NewsLorePage() {
         <SectionLabel emoji="📜" title="The timeline" />
         <div className="glass-strong rounded-2xl p-4">
           <ol className="relative space-y-4 border-l-2 border-white/10 pl-5">
-            {news.timeline.map((t, i) => (
+            {news.timeline.map((t: { date: string; event: string }, i: number) => (
               <li key={i} className="relative">
                 <span className="gradient-neon shadow-neon absolute -left-[27px] top-1 h-3 w-3 rounded-full" />
                 <div className="text-[11px] font-semibold uppercase tracking-wider text-cyan-300">
